@@ -1,5 +1,6 @@
 package com.example.studyingrestfulapi.user;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 //@JsonIgnoreProperties(value = {"password", "ssno"})   //json 전달 무시
+@JsonFilter("UserInfo") //임의의 필터값 부여
 public class User {
     private Integer id;
 
@@ -20,8 +22,8 @@ public class User {
     @Past
     private Date joinDate;  //import필요
 
-    @JsonIgnore //data 값을 무시해주세요 json으로 전달 안됨
+//    @JsonIgnore //data 값을 무시해주세요 json으로 전달 안됨
     private String password;
-    @JsonIgnore
+//    @JsonIgnore
     private String ssno;
 }
