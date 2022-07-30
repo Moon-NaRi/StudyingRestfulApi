@@ -1,10 +1,10 @@
-package com.moonnari1.restfulwebservice;
+package com.example.studyingrestfulapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MoonApiApplicationTests {
+class StudyingRestfulApiApplicationTests {
 
     @Test
     void contextLoads() {

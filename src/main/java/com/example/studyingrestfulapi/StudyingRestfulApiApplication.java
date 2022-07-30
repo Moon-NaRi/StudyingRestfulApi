@@ -1,13 +1,13 @@
-package com.moonnari1.restfulwebservice;
+package com.example.studyingrestfulapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MoonApiApplication {
+public class StudyingRestfulApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MoonApiApplication.class, args);
+        SpringApplication.run(StudyingRestfulApiApplication.class, args);
     }
 
 }
