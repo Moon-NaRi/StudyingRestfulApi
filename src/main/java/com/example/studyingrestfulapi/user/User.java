@@ -12,7 +12,7 @@ import java.util.Date;
 public class User {
     private Integer id;
 
-    @Size(min=2)
+    @Size(min=2, message = "Name은 2글자 이상 입력하십시오.")
     private String name;
     @Past
     private Date joinDate;  //import필요
