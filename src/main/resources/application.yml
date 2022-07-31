@@ -11,6 +11,23 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  #h2 console 활성화
+  h2:
+    console:
+      enabled: true
+      #원격접속 허용
+      settings:
+        web-allow-others: true
+      # 경로
+      path: /h2-console
+  #유일한 이름 생성 여부
+  datasource:
+    generate-unique-name: false
+    #url 경로
+    url: jdbc:h2:mem:testdb
+    #class 명칭
+    driver-class-name: org.h2.Driver
+
 #  security:
 #    user:
 #      name: username
