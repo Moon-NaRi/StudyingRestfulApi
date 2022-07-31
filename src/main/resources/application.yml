@@ -6,6 +6,11 @@ logging:
     org.springframework: DEBUG
 
 spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      defer-datasource-initialization: true
   messages:
     basename: messages
   mvc:

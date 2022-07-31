@@ -1,14 +1,13 @@
 package com.example.studyingrestfulapi.user;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -18,8 +17,12 @@ import java.util.Date;
 @NoArgsConstructor  //상속을 위해 디폴트 생성자 선언
 //@JsonIgnoreProperties(value = {"password", "ssno"})   //json 전달 무시
 @JsonFilter("UserInfo") //임의의 필터값 부여
+@Entity
+@Table(name = "USERALL")
 //@ApiModel(description = "사용자 상세 정보를 위한 도메인 객체")
-public class User {
+public class UserAll {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) //jdbc에서 table 자동 생성해줌
     private Integer id;
 
     @Size(min=2, message = "Name은 2글자 이상 입력하십시오.")

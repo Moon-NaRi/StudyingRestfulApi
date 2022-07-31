@@ -27,7 +27,7 @@ public class AdminUserController {
 
     @GetMapping("/users")
     public MappingJacksonValue retrieveAllUsers() {
-        List<User> users = service.findAll();
+        List<UserAll> users = service.findAll();
 
         SimpleBeanPropertyFilter filter =
                 SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "ssno", "password");
@@ -44,7 +44,7 @@ public class AdminUserController {
 
     @GetMapping("/users/{id}")
     public MappingJacksonValue retrieveUser(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
@@ -66,7 +66,7 @@ public class AdminUserController {
     //버전 생성
     @GetMapping("/users/ver1/{id}")
     public MappingJacksonValue retrieveUser1(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
@@ -94,7 +94,7 @@ public class AdminUserController {
     //http://localhost:8088/admin/users/1/?version=1
     @GetMapping(value = "/users/{id}/", params = "version=1")
     public MappingJacksonValue retrieveUser2(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
@@ -118,7 +118,7 @@ public class AdminUserController {
     //http://localhost:8088/admin/users/1
     @GetMapping(value = "/users/{id}", headers = "Api-Version=1")
     public MappingJacksonValue retrieveUser3(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
@@ -142,7 +142,7 @@ public class AdminUserController {
     //http://localhost:8088/admin/users/1
     @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue retrieveUser4(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));

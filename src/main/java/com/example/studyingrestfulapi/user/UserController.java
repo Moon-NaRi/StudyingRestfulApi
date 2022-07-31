@@ -24,20 +24,20 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> retrieveAllUsers() {
+    public List<UserAll> retrieveAllUsers() {
         return service.findAll();   //전체 사용자목록 반환
     }
 
     @GetMapping("/users/{id}")
     public MappingJacksonValue retrieveUser(@PathVariable int id) {
-        User user = service.findOne(id);
+        UserAll user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
 
         //HATEOAS
-        EntityModel<User> entityModel = EntityModel.of(user);
+        EntityModel<UserAll> entityModel = EntityModel.of(user);
         WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
         //import static 사용하면 class명을 쓰지 않아 코드를 더 줄일 수 있음
         entityModel.add(linkTo.withRel("all-users"));
@@ -62,8 +62,8 @@ public class UserController {
     //생성 Post 요청시 사용
     //@RequestBody로 데이터(json 형태) 전달받는다
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = service.save(user);
+    public ResponseEntity<UserAll> createUser(@Valid @RequestBody UserAll user) {
+        UserAll savedUser = service.save(user);
 
         //사용자에게 요청값 반환 201 status
         //여기 id에 무슨 값이 들어가는지 어떻게 알아
@@ -77,7 +77,7 @@ public class UserController {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        User user = service.deleteUserById(id);
+        UserAll user = service.deleteUserById(id);
 
         if (user == null ) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));

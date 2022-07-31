@@ -14,6 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 //@JsonIgnoreProperties(value = {"password", "ssno"})   //json 전달 무시
 @JsonFilter("UserInfoVer2") //임의의 필터값 부여
-public class UserVer2 extends User {
+public class UserVer2 extends UserAll {
     private String grade;
 }

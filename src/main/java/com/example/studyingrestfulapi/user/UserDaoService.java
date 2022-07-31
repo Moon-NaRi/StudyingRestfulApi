@@ -13,24 +13,24 @@ public class UserDaoService {
     //비즈니스 로직 관련
 
     //DB역할을 하는 ArrayList
-    private  static List<User> users = new ArrayList<>();
+    private  static List<UserAll> users = new ArrayList<>();
 
     //static으로 선언하여 프로그램이 시작될 때 할당함.. 함수가 끝나도 사용 가능
     //단 여기 파일에서만 사용 가능(정보은닉)
     private static int usersCount = 3;
 
     static {
-        users.add(new User(1, "yujin", new Date(), "pass1", "701010-1111111"));
-        users.add(new User(2, "yujun", new Date(), "pass2", "702020-2222222"));
-        users.add(new User(3, "yujan", new Date(), "pass3", "703030-3333333"));
+        users.add(new UserAll(1, "yujin", new Date(), "pass1", "701010-1111111"));
+        users.add(new UserAll(2, "yujun", new Date(), "pass2", "702020-2222222"));
+        users.add(new UserAll(3, "yujan", new Date(), "pass3", "703030-3333333"));
     }
 
-    public List<User> findAll() {
+    public List<UserAll> findAll() {
         return users;
     }
 
-    public User findOne(int id) {
-        for(User user : users) {
+    public UserAll findOne(int id) {
+        for(UserAll user : users) {
             if (user.getId() == id) {
                 return user;
             }
@@ -40,7 +40,7 @@ public class UserDaoService {
         return null;
     }
 
-    public User save(User user) {
+    public UserAll save(UserAll user) {
         if (user.getId() == null) {
             user.setId(++usersCount);
         }
@@ -50,11 +50,11 @@ public class UserDaoService {
     }
     
     //삭제
-    public User deleteUserById(int id) {
-        Iterator<User> iterator = users.iterator(); //순차적인 결과값
+    public UserAll deleteUserById(int id) {
+        Iterator<UserAll> iterator = users.iterator(); //순차적인 결과값
         
         while (iterator.hasNext()) {
-            User user = iterator.next();
+            UserAll user = iterator.next();
             
             if (user.getId() == id) {
                 iterator.remove();
