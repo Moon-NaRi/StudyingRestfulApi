@@ -96,10 +96,10 @@
         <!-- 인증처리 위해 추가
         서버 기동시 콘솔창에서 확인 가능 / 웹서비스 호출시 사용
          스프링에서 비번을 자동으로 생성해줌-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-security</artifactId>-->
+<!--        </dependency>-->
         <!-- 관계형 db 처리를 위해 추가 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
