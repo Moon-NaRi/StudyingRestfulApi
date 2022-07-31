@@ -3,6 +3,8 @@ package com.example.studyingrestfulapi.user;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +60,33 @@ public class AdminUserController {
         MappingJacksonValue mapping = new MappingJacksonValue(user);
         mapping.setFilters(filters);
         
+        return mapping; //필터 된 값 반환
+    }
+
+    //버전 생성
+    @GetMapping("/users/ver1/{id}")
+    public MappingJacksonValue retrieveUser1(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        //반환 받은 User 값을 User2로 변환한다
+        UserVer2 user2 = new UserVer2();
+        BeanUtils.copyProperties(user, user2); //user data 5가지를 가짐
+        user2.setGrade("VIP");
+
+        SimpleBeanPropertyFilter filter =
+                SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "joinDate", "grade");
+        //보려는 데이터만 추가함
+
+        //사용 가능한 필터로 만들기
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfoVer2", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
         return mapping; //필터 된 값 반환
     }
 }
