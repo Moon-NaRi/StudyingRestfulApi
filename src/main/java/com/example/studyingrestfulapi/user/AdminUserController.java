@@ -89,4 +89,75 @@ public class AdminUserController {
 
         return mapping; //필터 된 값 반환
     }
+
+    //파라미터로 버전 관리
+    //http://localhost:8088/admin/users/1/?version=1
+    @GetMapping(value = "/users/{id}/", params = "version=1")
+    public MappingJacksonValue retrieveUser2(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        SimpleBeanPropertyFilter filter =
+                SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "ssno", "password");
+        //보려는 데이터만 추가함
+
+        //사용 가능한 필터로 만들기
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping; //필터 된 값 반환
+    }
+
+    //헤더로 버전 관리 PostMan header에 추가
+    //일반 브라우저에서는 실행 불가능함
+    //http://localhost:8088/admin/users/1
+    @GetMapping(value = "/users/{id}", headers = "Api-Version=1")
+    public MappingJacksonValue retrieveUser3(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        SimpleBeanPropertyFilter filter =
+                SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "ssno", "password");
+        //보려는 데이터만 추가함
+
+        //사용 가능한 필터로 만들기
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping; //필터 된 값 반환
+    }
+
+    //MIME로 버전 관리 PostMan header에 추가
+    //일반 브라우저에서는 실행 불가능함
+    //http://localhost:8088/admin/users/1
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
+    public MappingJacksonValue retrieveUser4(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        SimpleBeanPropertyFilter filter =
+                SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "ssno", "password");
+        //보려는 데이터만 추가함
+
+        //사용 가능한 필터로 만들기
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping; //필터 된 값 반환
+    }
 }
