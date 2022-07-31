@@ -1,6 +1,12 @@
 package com.example.studyingrestfulapi.user;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,14 +29,34 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public MappingJacksonValue retrieveUser(@PathVariable int id) {
         User user = service.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
 
-        return user;  // 한명 반환
+        //HATEOAS
+        EntityModel<User> entityModel = EntityModel.of(user);
+        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
+        //import static 사용하면 class명을 쓰지 않아 코드를 더 줄일 수 있음
+        entityModel.add(linkTo.withRel("all-users"));
+        //all-users와 retrieveAllUsers를 연결
+
+        //필터링 기능 추가
+        SimpleBeanPropertyFilter filter =
+                SimpleBeanPropertyFilter.filterOutAllExcept("id", "name");
+
+        //사용 가능한 필터로 만들기
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(entityModel);
+        mapping.setFilters(filters);
+
+        //전체 사용자 보기를 추가하여 리턴함
+        return mapping;
+
+//        return entityModel;
     }
 
     //생성 Post 요청시 사용
