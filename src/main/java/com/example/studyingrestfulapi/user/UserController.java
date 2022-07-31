@@ -53,7 +53,7 @@ public class UserController {
         MappingJacksonValue mapping = new MappingJacksonValue(entityModel);
         mapping.setFilters(filters);
 
-        //전체 사용자 보기를 추가하여 리턴함
+        //전체 사용자 보기 링크를 추가하여 리턴함
         return mapping;
 
 //        return entityModel;
